@@ -1,0 +1,152 @@
+@import url(https://fonts.googleapis.com/css?family=Oxygen:400,300);
+.header {
+    padding: 2em;
+    background: #f08f90;
+    border-bottom: 0.5em solid #f47983;
+}
+.header h1,
+.header h6 {
+    color: #fff;
+    font-weight: 100;
+}
+.main {
+    margin-bottom: 3em;
+}
+.img-round {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+    -webkit-transition: all 300ms ease-in;
+    transition: all 300ms ease-in;
+    cursor: pointer;
+}
+.img-round:hover,
+.img-round:focus {
+    border: 3px solid #f08f90;
+}
+.mason,
+.chlo,
+.lola {
+    -webkit-transition: opacity 300ms ease-in;
+    transition: opacity 300ms ease-in;
+    opacity: 0;
+}
+.mason:after,
+.lola:after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    left: 1em;
+    height: 0.15em;
+    background-image: -webkit-linear-gradient(0deg, #f47983 0%, #fff 100%);
+    background-image: linear-gradient(90deg, #f47983 0%, #fff 100%);
+}
+.chlo:after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 1em;
+    left: 0;
+    height: 0.15em;
+    background-image: -webkit-linear-gradient(0deg, #fff 0%, #f47983 100%);
+    background-image: linear-gradient(90deg, #fff 0%, #f47983 100%);
+}
+.breaker {
+    margin: 2em 0;
+    text-align: center;
+}
+.breaker h3 {
+    color: #bfbfbf;
+}
+.breaker h3:before {
+    content: "";
+    display: block;
+    border-top: solid 1px #e5e0e0;
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+}
+.breaker h3 span {
+    background: #fff;
+    padding: 0 20px;
+    position: relative;
+    z-index: 5;
+}
+img {
+    -webkit-transition: all 500ms ease;
+    transition: all 500ms ease;
+}
+.mason-img:after {
+    content: '+';
+    font-size: 3em;
+    position: relative;
+    top: 0;
+    left: 20%;
+    color: #e5e0e0;
+}
+.text-holder {
+    margin-top: 1em;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Oxygen;
+}
+p {
+    font-size: 0.8em;
+}
+footer {
+    background: #f08f90;
+    padding: 0.75em;
+}
+footer h6 {
+    color: #fff;
+    font-weight: 100;
+}
+@media only screen and (max-width: 1025px) {
+    .mason-img,
+    .lola-img {
+        margin: 2em 0;
+    }
+    .mason-img:after {
+        display: none;
+    }
+    .mason,
+    .chlo,
+    .lola {
+        opacity: 1;
+    }
+}
+.heart-shape {
+    position: relative;
+    margin: 1em auto 0.2em auto;
+    width: 14px;
+    height: 14px;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #f47983;
+}
+.heart-shape:before,
+.heart-shape:after {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    content: '';
+    border-radius: 50%;
+    background-color: #f47983;
+}
+.heart-shape:before {
+    bottom: 0px;
+    left: -7px;
+}
+.heart-shape:after {
+    top: -7px;
+    right: 0px;
+}

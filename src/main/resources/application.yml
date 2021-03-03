@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ecs-oms4-einvoice-frontend
+  profiles:
+    active: sit
+  mvc:
+    view:
+      prefix: /templates
+      suffix: .html
+
+server:
+  port: 8080
