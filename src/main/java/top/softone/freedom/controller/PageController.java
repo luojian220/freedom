@@ -21,7 +21,7 @@ public class PageController {
         return "index.html";
     }
 
-    @GetMapping("/pages/{path}")
+    @GetMapping(value = {"/pages/{path}","/pages/{path}.html"})
     public String page(@PathVariable String path) {
         if (StringUtils.hasText(path) && path.endsWith(HTML)) {
             return "pages/".concat(path);
