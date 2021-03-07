@@ -32,6 +32,7 @@
 </head>
 
 <body>
+<div id="rrapp">
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -59,39 +60,11 @@
 
 
 <div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-md-4">
-            <h2>第一篇面试题</h2>
+    <div class="row" v-for="arr in articleList">
+        <div class="col-md-4" v-for="article in arr">
+            <h2>{{article.title}}</h2>
             <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="/pages/interview_detail.html?id=d4e26e47-bfef-4b3e-bb1e-7691d9587deb" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><button class="btn btn-default" @click="goDetail(article.id)" role="button">View details &raquo;</button></p>
         </div>
     </div>
     <hr>
@@ -100,7 +73,7 @@
         <p>&copy; 2021 Company, Inc. &nbsp;&nbsp;&nbsp;<a href="http://beian.miit.gov.cn" target=_blank>鄂ICP备2021003147号-1</a></p>
     </footer>
 </div> <!-- /container -->
-
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -110,5 +83,40 @@
 <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="/js/lib/vue.js"></script>
+<script src="/js/lib/layer/layer.js"></script>
+<script src="/js/common.js"></script>
+<script>
+    $(function () {
+        vm.getInterviewList();
+        // href="/pages/interview_detail.html"
+    });
+    let vm = new Vue({
+        el: '#rrapp',
+        data: {
+            articleList: null
+        },
+        methods: {
+            getInterviewList: function () {
+                Ajax.request({
+                    type: 'GET',
+                    url: "/interview/list",
+                    params: {
+                        type: "interview"
+                    },
+                    async: false,
+                    resultMsg:false,
+                    successCallback: function (resp) {
+                        vm.articleList = resp.data;
+                        console.log(vm.articleList);
+                    }
+                });
+            },
+            goDetail: function (id) {
+                window.location.href = "/pages/interview_detail.html?id="+ id;
+            }
+        }
+    });
+</script>
 </body>
 </html>

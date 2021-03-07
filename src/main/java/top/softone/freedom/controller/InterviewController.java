@@ -11,6 +11,7 @@ import top.softone.freedom.model.Article;
 import top.softone.freedom.model.ResponseVO;
 import top.softone.freedom.service.ArticleService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,7 +51,25 @@ public class InterviewController {
 
         ResponseVO<Object> responseVO = ResponseVO.success();
         List<Object> articleList = articleService.getArticleList(type);
-        responseVO.setData(articleList);
+        List<List<Object>> rowsList = new ArrayList<>();
+        if (articleList.size() > 0 ) {
+            int rows = (articleList.size() - 1) / 3 + 1;
+            System.out.println("rows:" + rows);
+            List<Object> temp ;
+            for (int i = 0 ; i < rows ; i ++) {
+                temp = new ArrayList<>();
+                for (int j= 0 ; j < 3 ; j ++) {
+                    int index = i * 3 + j;
+                    System.out.println(index);
+                    temp.add(articleList.get(index));
+                    if ((index + 1) == articleList.size()) {
+                        break;
+                    }
+                }
+                rowsList.add(temp);
+            }
+        }
+        responseVO.setData(rowsList);
         return responseVO;
     }
 
