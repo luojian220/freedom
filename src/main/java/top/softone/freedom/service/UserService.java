@@ -2,6 +2,8 @@ package top.softone.freedom.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisOperations;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import top.softone.freedom.model.User;

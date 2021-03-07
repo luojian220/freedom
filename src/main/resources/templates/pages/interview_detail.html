@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>md转换为html</title>
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+    <script src="/js/lib/vue.js"></script>
+    <script src="/js/lib/layer/layer.js"></script>
+    <script src="/js/common.js"></script>
+    <link href="/css/markdown.css" rel="stylesheet">
+    <style>
+        #area>table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #area table tr td {
+            margin: 0;
+            padding: 6px;
+            border: 0;
+
+        }
+
+
+        #md-area {
+
+            width: 100%;
+            height: 600px;
+            font-size: 18px;
+            overflow: hidden;
+            font-weight: bold;
+            outline: none;
+        }
+
+        #show-area {
+            height: 600px;
+            background-color: #FCF6E5;
+        }
+
+        .clearfix:before {
+            content: "";
+            display: table;
+        }
+    </style>
+</head>
+
+<body>
+<div id="rrapp" v-cloak>
+    <div style="font-size: 20px;height: 30px; text-align: center;color: #009689; font-weight: bold;">{{title}}</div>
+    <div style="font-size: 10px;height: 30px; text-align: center;">{{author}}</div>
+    <div id="area">
+        <table>
+            <tr>
+                <td>
+                    <div id="show-area" class="clearfix"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script>
+    $(function () {
+        vm.mdId = getQueryString("id");
+        vm.getInterviewDetail();
+
+    });
+    let vm = new Vue({
+        el: '#rrapp',
+        data: {
+            mdId: "",
+            title: null,
+            author: "",
+            mdValue: "# 加载中。。。",
+        },
+        methods: {
+            mdShow:function () {
+
+                var converter = new showdown.Converter();
+                var htmlValue = converter.makeHtml(vm.mdValue);
+                document.getElementById("show-area").innerHTML = htmlValue;
+            },
+            getInterviewDetail: function () {
+                Ajax.request({
+                    type: 'GET',
+                    url: "/interview/detail",
+                    params: {
+                        type: "interview",
+                        id: vm.mdId,
+                    },
+                    async: false,
+                    resultMsg:false,
+                    successCallback: function (resp) {
+                        console.log(resp);
+                        vm.title = resp.data.title;
+                        vm.author = resp.data.author;
+                        vm.mdValue = resp.data.mdValue;
+                        vm.mdShow();
+                    }
+                });
+            }
+        }
+    });
+</script>
+</body>
+
+</html>
