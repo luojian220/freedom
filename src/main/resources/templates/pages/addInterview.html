@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>程序员社区</title>
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>-->
+    <!--<link href="/css/markdown.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://unpkg.com/mditor@1.0.5/dist/css/mditor.min.css" />
+    <link href="/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/mditor@1.0.5/dist/js/mditor.min.js"></script>
+    <script src="/js/lib/vue.js"></script>
+    <script src="/js/lib/layer/layer.js"></script>
+    <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        #area>table {
+            width: 100%;
+            height: 100%;
+            table-layout: fixed;
+        }
+        #area table tr td {
+            margin: 0;
+            padding: 6px;
+            border: 0;
+        }
+        div.article {
+            height: 800px;
+        }
+    </style>
+</head>
+
+<body>
+<div style="font-size: 20px;height: 30px; text-align: center;color: #009689; font-weight: bold;">发布面试题</div>
+<div id="area">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">标题</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">标签</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputPassword3" placeholder="标签">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">内容</label>
+            <div class="col-sm-10">
+                <textarea id="md-area" class="form-control" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" @click="submitArticle" class="btn btn-default">发布</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        var editor =  Mditor.fromTextarea(document.getElementById('md-area'));
+        vm.mditor = editor;
+    });
+    var vm = new Vue({
+        el: '#area',
+        data: {
+            mdValue: "",
+            mditor: null
+        },
+        methods: {
+            submitArticle:function () {
+                vm.mdValue = $(".editor").val();
+                console.log(vm.mdValue);
+            }
+        }
+    });
+</script>
+</body>
+
+</html>
