@@ -2,8 +2,10 @@ package top.softone.freedom.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ import java.util.concurrent.locks.Lock;
 @RequestMapping("userX")
 public class UserController {
 
+    private static final String REDISSON_BLOOMFILTER_USER = "REDISSON_BLOOMFILTER_USER";
+
     @Autowired
     private UserService userService;
 
@@ -39,7 +43,22 @@ public class UserController {
     @PostMapping("addUser")
     public String addUser(@RequestBody User user) {
 
-        userService.addUser(user);
+        try {
+            RBloomFilter<String> bloomFilter
+                    = redissonClient.getBloomFilter(REDISSON_BLOOMFILTER_USER);
+            //布隆过滤器计算的正确率为97%，初始化布隆过滤器容量为50000L
+            bloomFilter.tryInit(50000L, 0.03);
+            if (bloomFilter.contains(user.getNickName())) {
+                throw new RuntimeException("用户名:" + user.getNickName() + "已经存在");
+            }
+
+            userService.addUser(user);
+
+            //加入布隆过滤器
+            bloomFilter.add(user.getNickName());
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         return "OK";
     }
 
